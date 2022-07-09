@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
+import MapScreen from "../screens/app/MapScreen";
 
 import { Screens } from "../config/constants";
 import ShopScreen from "../screens/app/shop";
@@ -32,3 +33,7 @@ export const BottomTabNavigator = () => {
     </BottomTabs.Navigator>
   );
 };
+
+
+//random function that finds between min and ax
+
