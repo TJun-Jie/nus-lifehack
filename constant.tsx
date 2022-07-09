@@ -2,6 +2,7 @@ export enum Screens {
   Login = "Login",
   Signup = "Signup",
   Home = "Home",
+  Shop = "Shop"
 }
 
 export enum Colors {

@@ -7,12 +7,13 @@ import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
 
 import { Screens } from "../constant";
+import ShopScreen from "../screens/app/shop";
 
 const AuthStack = createStackNavigator();
 
 export const AuthNavigator = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name={Screens.Login} component={LoginScreen} />
       <AuthStack.Screen name={Screens.Signup} component={SignupScreen} />
     </AuthStack.Navigator>
@@ -23,8 +24,9 @@ const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
       <BottomTabs.Screen name={Screens.Home} component={HomeScreen} />
+      <BottomTabs.Screen name={Screens.Shop} component={ShopScreen} />
     </BottomTabs.Navigator>
   );
 };
