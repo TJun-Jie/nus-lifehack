@@ -69,19 +69,10 @@ function MapComponent() {
                 // doc.data() is never undefined for query doc snapshots
                 const newBin = item.data() as BinsDoc;
                 setBins([...bins, newBin])
-
             })
-
-
         }
-
-
-
         fetchData().catch(e => console.log(e));
-
-
-
-    }, [bins]);
+    }, []);
 
     const [markers, setMarkers] = useState(data.Route.coordinates);
     const renderedMarker = [];
