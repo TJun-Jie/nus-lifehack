@@ -26,6 +26,10 @@
     "react-hook-form": "^7.33.1",
     "react-native": "0.68.2",
     "react-native-gesture-handler": "^2.5.0",
+    "react-native-input-outline": "^1.5.2",
+    "react-native-pager-view": "5.4.15",
+    "react-native-reanimated": "^2.0.0-rc.0",
+    "react-native-tab-view": "^3.1.1",
     "react-native-maps": "^1.0.0",
     "react-native-web": "0.17.7",
     "yup": "^0.32.11"
