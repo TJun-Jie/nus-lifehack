@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
+import MapScreen from "../screens/app/MapScreen";
 
 import { constants } from "../constant";
 
@@ -29,11 +30,19 @@ const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator screenOptions={{headerShown: false}}>
       <BottomTabs.Screen
         name={constants.screenNames.home}
         component={HomeScreen}
       />
+        <BottomTabs.Screen
+            name={constants.screenNames.maps}
+            component={MapScreen}
+        />
     </BottomTabs.Navigator>
   );
 };
+
+
+//random function that finds between min and ax
+
