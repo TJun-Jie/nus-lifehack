@@ -1,5 +1,5 @@
-import { firestore } from "config/firebase";
-import { Post, PostDoc } from "config/interfaces";
+import { firestore } from "../config/firebase";
+import { Post, PostDoc } from "../config/interfaces";
 import { collection, addDoc, deleteDoc, updateDoc, doc, DocumentData } from "firebase/firestore";
 import { useCollection, useDocumentData } from "react-firebase-hooks/firestore";
 import { DataOptions } from "react-firebase-hooks/firestore/dist/firestore/types";
