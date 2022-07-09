@@ -27,7 +27,8 @@
     "react-native-gesture-handler": "^2.5.0",
     "react-native-web": "0.17.7",
     "yup": "^0.32.11",
-    "expo-camera": "~12.2.0"
+    "expo-camera": "~12.2.0",
+    "@expo/vector-icons": "^13.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

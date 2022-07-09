@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Alert, Button } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import { Ionicons } from "@expo/vector-icons";
+
+import { constants } from "../../constant";
 
 export type Props = {};
 
 interface States {
   hasPermissions: boolean;
+  camera: Camera | null;
   cameraType: CameraType;
+  capturedImage: any;
   error: string;
 }
 
-const CameraScreen: React.FC<Props> = () => {
+const CameraScreen: React.FC<Props> = (props: any) => {
+  const cameraRef = useRef(null);
   const [cameraState, setCameraState] = useState<States>({
     hasPermissions: false,
+    camera: null,
     cameraType: CameraType.back,
+    capturedImage: null,
     error: "",
   });
 
@@ -40,9 +48,35 @@ const CameraScreen: React.FC<Props> = () => {
       });
   };
 
+  // Get camera permissions on first render NOTE
   useEffect(() => {
     getCameraPermissions();
   }, []);
+
+  // Update camera state whenever cameraRef.current changes NOTE
+  useEffect(() => {
+    console.log(cameraRef.current);
+    setCameraState((prevState) => {
+      return { ...prevState, camera: cameraRef.current };
+    });
+  }, [cameraRef.current]);
+
+  // Take screenshot when click on scan NOTE
+  const onScanHandler = () => {
+    if (cameraState.camera) {
+      cameraState.camera
+        .takePictureAsync()
+        .then((img) => {
+          console.log(img);
+          props.navigation.navigate(constants.screenNames.scanDetail, {
+            imgSource: cameraState.capturedImage.uri,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   // Conditional render depending on whether permissions given NOTE
   if (cameraState.hasPermissions === false) {
@@ -57,17 +91,43 @@ const CameraScreen: React.FC<Props> = () => {
   return (
     <View style={styles.cameraContainer}>
       <View style={styles.cameraOverlay}>
+        <View style={styles.goBackContainer}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => {
+              props.navigation.navigate(constants.screenNames.home);
+            }}
+          >
+            <Ionicons name="arrow-back-outline" size={36} color="white" />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.topOverlayContainer}>
           <Text style={styles.scanText}>Scan Item</Text>
         </View>
+
         <View style={styles.focusContainer}>
           <View style={styles.focusMargin} />
           <View style={styles.focusArea} />
           <View style={styles.focusMargin} />
         </View>
-        <View style={styles.bottomOverlayContainer} />
+
+        <View style={styles.bottomOverlayContainer}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.submitButtonContainer}
+            onPress={onScanHandler}
+          >
+            <Text style={{ color: "white" }}>Scan</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <Camera style={{ flex: 1 }} type={cameraState.cameraType}></Camera>
+
+      <Camera
+        style={{ flex: 1 }}
+        type={cameraState.cameraType}
+        ref={cameraRef}
+      />
     </View>
   );
 };
@@ -96,8 +156,17 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
+  goBackContainer: {
+    height: "10%",
+    width: "100%",
+    padding: 10,
+    justifyContent: "flex-end",
+    backgroundColor: "black",
+    opacity: 0.5,
+  },
+
   topOverlayContainer: {
-    height: "30%",
+    height: "20%",
     width: "100%",
     backgroundColor: "black",
     opacity: 0.5,
@@ -138,6 +207,17 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "black",
     opacity: 0.5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  submitButtonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "#407056",
+    width: "70%",
+    height: "20%",
   },
 });
 
