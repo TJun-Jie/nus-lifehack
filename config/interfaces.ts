@@ -12,6 +12,7 @@ export interface Reward {
   title: string;
   description: string;
   points: number;
+  url: string;
 }
 
 export interface Bins {

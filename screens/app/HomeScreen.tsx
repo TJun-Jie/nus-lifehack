@@ -1,60 +1,100 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { Colors } from "../../config/constants";
+import { View, Text, StyleSheet, SafeAreaView, Pressable, Image } from "react-native";
+import { Colors, Screens } from "../../config/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
 
 export type Props = {};
 
-const HomeScreen: React.FC<Props> = () => {
+const HomeScreen: React.FC<Props> = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.menuWrapper}>
         <View style={styles.menuContainer}>
-          <View style={styles.leftMenu}>
-            <Text style={styles.menuHeader}>400</Text>
+          <Pressable
+            style={styles.leftMenu}
+            onPress={() => navigation.navigate(Screens.Shop, { tab: "Shop" })}
+          >
             <Text style={styles.menuContent}>My Points</Text>
-          </View>
-          <View style={styles.rightMenu}>
-            <Text style={styles.menuHeader}>My Points</Text>
-            <Text style={styles.menuContent}>Shop</Text>
-          </View>
+            <Text style={styles.menuHeader}>100</Text>
+          </Pressable>
+          <Pressable
+            style={styles.rightMenu}
+            onPress={() => navigation.navigate(Screens.Shop, { tab: "My Rewards" })}
+          >
+            <Text style={styles.menuContent}>Rewards</Text>
+            <Text style={styles.menuHeader}>3 rewards</Text>
+          </Pressable>
         </View>
       </View>
 
       <View>
         <View style={styles.barChart}>
           <View style={styles.barContainer}>
-            <View style={styles.barIcon}>
-              <Ionicons name="add" size={30} />
+            <View style={styles.imgContainer}>
+              <Image
+                source={{
+                  uri: "https://cdn.discordapp.com/attachments/896630396903624714/995405698177437696/unknown.png",
+                }}
+                style={styles.img}
+              />
+            </View>
+            <Text style={styles.barLabel}>Plastic</Text>
+            <View style={styles.scoreContainer}>
+              <Text style={styles.score}>10/40</Text>
+            </View>
+            <View style={styles.bar} />
+          </View>
+
+          <View style={styles.barContainer}>
+            <View style={styles.imgContainer}>
+              <Image
+                source={{
+                  uri: "https://cdn.discordapp.com/attachments/896630396903624714/995405747200475197/unknown.png",
+                }}
+                style={styles.img}
+              />
+            </View>
+            <Text style={styles.barLabel}>Metal</Text>
+            <View style={styles.scoreContainer}>
+              <Text style={styles.score}>10/40</Text>
             </View>
             <View style={styles.bar} />
           </View>
           <View style={styles.barContainer}>
-            <View style={styles.barIcon}>
-              <Ionicons name="add" size={30} />
+            <View style={styles.imgContainer}>
+              <Image
+                source={{
+                  uri: "https://cdn.discordapp.com/attachments/896630396903624714/995405788656975872/unknown.png",
+                }}
+                style={styles.img}
+              />
+            </View>
+            <Text style={styles.barLabel}>Paper</Text>
+            <View style={styles.scoreContainer}>
+              <Text style={styles.score}>10/40</Text>
             </View>
             <View style={styles.bar} />
           </View>
+
           <View style={styles.barContainer}>
-            <View style={styles.barIcon}>
-              <Ionicons name="add" size={30} />
+            <View style={styles.imgContainer}>
+              <Image
+                source={{
+                  uri: "https://cdn.discordapp.com/attachments/896630396903624714/995405827655610431/unknown.png",
+                }}
+                style={styles.img}
+              />
             </View>
-            <View style={styles.bar} />
-          </View>
-          <View style={styles.barContainer}>
-            <View style={styles.barIcon}>
-              <Ionicons name="add" size={30} />
+            <Text style={styles.barLabel}>Glass</Text>
+            <View style={styles.scoreContainer}>
+              <Text style={styles.score}>10/40</Text>
             </View>
             <View style={[styles.bar, { height: 200 }]} />
           </View>
         </View>
 
-        <View style={styles.btmBar}>
-          <Text style={styles.barText}>Bottles</Text>
-          <Text style={styles.barText}>Cans</Text>
-          <Text style={styles.barText}>Paper</Text>
-          <Text style={styles.barText}>Plastic</Text>
-        </View>
+        <View style={styles.btmBar}></View>
       </View>
     </SafeAreaView>
   );
@@ -72,13 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.DarkGreen,
     flexDirection: "row",
     justifyContent: "space-around",
-  },
-
-  barText: {
-    width: "20%",
-    textAlign: "center",
-    paddingVertical: 10,
-    color: "white",
+    height: 37,
   },
 
   barChart: {
@@ -91,6 +125,10 @@ const styles = StyleSheet.create({
     width: "20%",
     alignItems: "center",
   },
+
+  imgContainer: { width: 50, height: 50, marginBottom: 5 },
+
+  img: { height: "100%" },
 
   barIcon: {
     backgroundColor: Colors.LightGreen,
@@ -127,10 +165,30 @@ const styles = StyleSheet.create({
   menuHeader: {
     textAlign: "center",
     marginBottom: 5,
+    fontWeight: "bold",
+    fontSize: 16,
   },
 
   menuContent: {
     textAlign: "center",
+  },
+
+  barLabel: {
+    fontSize: 14,
+    color: Colors.DarkBlue,
+    marginBottom: 2,
+  },
+
+  scoreContainer: {
+    backgroundColor: "white",
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    marginBottom: 5,
+    borderRadius: 10,
+  },
+
+  score: {
+    fontSize: 10,
   },
 });
 

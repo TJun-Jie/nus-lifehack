@@ -1,12 +1,17 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import ShopCard from "../../../components/ShopCard";
-import { myRewards } from "../../../config/constants";
+import { useSelector, useDispatch } from "react-redux";
+import { Reward } from "../../../config/interfaces";
+import { onChangeRewardItems } from "../../../redux/slices/userSlice";
 
 export default function MyRewards() {
+  const rewardItems = useSelector((state: AppState) => state.user.rewardItems) as Reward[];
+  const dispatch = useDispatch();
+
   return (
     <ScrollView style={styles.container}>
-      {myRewards.map((reward, index) => (
-        <ShopCard key={index} reward={reward} showPoints={false} />
+      {rewardItems.map((reward, index) => (
+        <ShopCard onRemove={() => {}} key={index} reward={reward} showPoints={false} />
       ))}
     </ScrollView>
   );
@@ -14,7 +19,7 @@ export default function MyRewards() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 30,
+    paddingTop: 10,
     paddingHorizontal: 12,
   },
 });
