@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { AuthNavigator, BottomTabNavigator } from "./AppNavigator";
+import { BottomTabNavigator } from "./AppNavigator";
 
 export type Props = {};
 
 const MainNavigator: React.FC<Props> = () => {
-  const [isAuth, setIsAuth] = useState(true);
-
   return (
     <NavigationContainer>
-      {isAuth ? <BottomTabNavigator /> : <AuthNavigator />}
+      <BottomTabNavigator />
     </NavigationContainer>
   );
 };

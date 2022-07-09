@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 
-import { constants } from "../../constant";
+import { Screens, Colors } from "../../config/constants";
 
 export type Props = {};
 
@@ -68,7 +68,7 @@ const CameraScreen: React.FC<Props> = (props: any) => {
         .takePictureAsync()
         .then((img) => {
           console.log(img);
-          props.navigation.navigate(constants.screenNames.scanDetail, {
+          props.navigation.navigate(Screens.ScanDetail, {
             imgSource: cameraState.capturedImage.uri,
           });
         })
@@ -95,7 +95,7 @@ const CameraScreen: React.FC<Props> = (props: any) => {
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => {
-              props.navigation.navigate(constants.screenNames.home);
+              props.navigation.navigate(Screens.Home);
             }}
           >
             <Ionicons name="arrow-back-outline" size={36} color="white" />

@@ -7,8 +7,22 @@ import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
 import CameraScreen from "../screens/app/CameraScreen";
 import ScanDetailsScreen from "../screens/app/ScanDetailsScreen";
+import MapScreen from "../screens/app/MapScreen";
 
-import { constants } from "../constant";
+import { Screens } from "../config/constants";
+import ShopScreen from "../screens/app/shop";
+import SettingsScreen from "../screens/app/SettingsScreen";
+
+const AuthStack = createStackNavigator();
+
+const AuthStackNavigator = () => {
+  return (
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name={Screens.Login} component={LoginScreen} />
+      <AuthStack.Screen name={Screens.Signup} component={SignupScreen} />
+    </AuthStack.Navigator>
+  );
+};
 
 const ScanStack = createStackNavigator();
 
@@ -19,12 +33,9 @@ const ScanStackNavigator = () => {
         headerShown: false,
       }}
     >
+      <ScanStack.Screen name={Screens.Camera} component={CameraScreen} />
       <ScanStack.Screen
-        name={constants.screenNames.camera}
-        component={CameraScreen}
-      />
-      <ScanStack.Screen
-        name={constants.screenNames.scanDetail}
+        name={Screens.ScanDetail}
         component={ScanDetailsScreen}
       />
     </ScanStack.Navigator>
@@ -35,45 +46,12 @@ const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   return (
-    <BottomTabs.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <BottomTabs.Screen
-        name={constants.screenNames.home}
-        component={HomeScreen}
-      />
-      <BottomTabs.Screen
-        name={constants.navigatorNames.scanNavigator}
-        component={ScanStackNavigator}
-        options={{
-          tabBarStyle: {
-            display: "none",
-          },
-        }}
-      />
+    <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
+      <BottomTabs.Screen name={Screens.Home} component={HomeScreen} />
+      <BottomTabs.Screen name={Screens.Map} component={MapScreen} />
+      <BottomTabs.Screen name={Screens.Camera} component={ScanStackNavigator} />
+      <BottomTabs.Screen name={Screens.Shop} component={ShopScreen} />
+      <BottomTabs.Screen name={Screens.Settings} component={SettingsScreen} />
     </BottomTabs.Navigator>
-  );
-};
-
-const AuthStack = createStackNavigator();
-
-export const AuthNavigator = () => {
-  return (
-    <AuthStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <AuthStack.Screen
-        name={constants.screenNames.login}
-        component={LoginScreen}
-      />
-      <AuthStack.Screen
-        name={constants.screenNames.signup}
-        component={SignupScreen}
-      />
-    </AuthStack.Navigator>
   );
 };
