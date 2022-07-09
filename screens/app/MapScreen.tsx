@@ -39,6 +39,47 @@ const data = {
                 longitude: 103.72105779063803,
                 danger: "Unsuitable For Running",
                 time: "15 June 8PM",
+            },            {
+                latitude: 1.351531,
+                longitude: 103.703635,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.347090,
+                longitude: 103.702423,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.340701,
+                longitude: 103.699316,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.336818,
+                longitude: 103.696215,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.331638,
+                longitude: 103.699017,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.337232,
+                longitude:  103.713270,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
+            },
+            {
+                latitude: 1.340332,
+                longitude: 103.715502,
+                danger: "Unsuitable For Running",
+                time: "15 June 8PM",
             },
         ],
     },
@@ -65,13 +106,18 @@ function MapComponent() {
     useEffect( () => {
         const fetchData = async () => {
             const querySnapshot = await getDocs(collection(firestore, "bins"));
+            const arr : BinsDoc[] = [];
             querySnapshot.forEach((item) => {
                 // doc.data() is never undefined for query doc snapshots
                 const newBin = item.data() as BinsDoc;
-                setBins([...bins, newBin])
+                arr.push(newBin);
             })
+             setBins(arr);
+            // console.log(bins);
+
         }
         fetchData().catch(e => console.log(e));
+
     }, []);
 
     const [markers, setMarkers] = useState(data.Route.coordinates);
@@ -95,6 +141,8 @@ function MapComponent() {
         { width: Dimensions.get("window").width  },
         { height: Dimensions.get("window").height },
     ]);
+
+    console.log(bins)
 
     return (
         <View>
