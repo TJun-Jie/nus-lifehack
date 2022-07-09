@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { Colors } from "../../constant";
+import { Colors } from "../../config/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type Props = {};

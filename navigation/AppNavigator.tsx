@@ -6,8 +6,9 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
 
-import { Screens } from "../constant";
+import { Screens } from "../config/constants";
 import ShopScreen from "../screens/app/shop";
+import SettingsScreen from "../screens/app/SettingsScreen";
 
 const AuthStack = createStackNavigator();
 
@@ -27,6 +28,7 @@ export const BottomTabNavigator = () => {
     <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
       <BottomTabs.Screen name={Screens.Home} component={HomeScreen} />
       <BottomTabs.Screen name={Screens.Shop} component={ShopScreen} />
+      <BottomTabs.Screen name={Screens.Settings} component={SettingsScreen} />
     </BottomTabs.Navigator>
   );
 };

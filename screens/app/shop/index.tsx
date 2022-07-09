@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useWindowDimensions, Text, SafeAreaView, StyleSheet } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
-import Rewards from "./Rewards";
-import Vouchers from "./Vouchers";
+import Shop from "./Shop";
+import MyRewards from "./MyRewards";
 
 const renderScene = SceneMap({
-  first: Rewards,
-  second: Vouchers,
+  first: Shop,
+  second: MyRewards,
 });
 
 export default function TabViewExample() {
@@ -14,7 +14,7 @@ export default function TabViewExample() {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "first", title: "Vouchers" },
+    { key: "first", title: "Shop" },
     { key: "second", title: "My Rewards" },
   ]);
 

@@ -7,3 +7,9 @@ export interface Post {
 export interface PostDoc extends Post {
   id: string;
 }
+
+export interface Reward {
+  title: string;
+  description: string;
+  points: number;
+}
