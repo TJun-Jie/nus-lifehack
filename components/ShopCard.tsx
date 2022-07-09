@@ -1,14 +1,20 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import { Reward } from "../config/interfaces";
 
 interface Props {
   reward: Reward;
   showPoints: boolean;
+  onRemove: () => void;
 }
 
-export default function ShopCard({ reward, showPoints }: Props) {
+export default function ShopCard({ reward, showPoints, onRemove }: Props) {
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={[styles.card, styles.shadowProp]}
+      onPress={() => {
+        onRemove();
+      }}
+    >
       <View style={styles.left}>
         <View style={styles.leftTop}>
           <Text style={styles.title}>{reward.title}</Text>
@@ -19,12 +25,12 @@ export default function ShopCard({ reward, showPoints }: Props) {
       <View style={styles.imageContainer}>
         <Image
           source={{
-            uri: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2040&q=80",
+            uri: reward.url,
           }}
           style={styles.image}
         />
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -34,6 +40,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: "row",
     borderRadius: 10,
+  },
+
+  shadowProp: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 
   left: {

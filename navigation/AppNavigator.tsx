@@ -10,6 +10,7 @@ import MapScreen from "../screens/app/MapScreen";
 import { Screens } from "../config/constants";
 import ShopScreen from "../screens/app/shop";
 import SettingsScreen from "../screens/app/SettingsScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const AuthStack = createStackNavigator();
 
@@ -27,14 +28,56 @@ const BottomTabs = createBottomTabNavigator();
 export const BottomTabNavigator = () => {
   return (
     <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
-      <BottomTabs.Screen name={Screens.Home} component={HomeScreen} />
-      <BottomTabs.Screen name={Screens.Shop} component={ShopScreen} />
-      <BottomTabs.Screen name={Screens.Map} component={MapScreen} />
-      <BottomTabs.Screen name={Screens.Settings} component={SettingsScreen} />
+      <BottomTabs.Screen
+        name={Screens.Home}
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons name={focused ? "home-sharp" : "home-outline"} size={24} color="black" />
+          ),
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "grey",
+        }}
+      />
+      <BottomTabs.Screen
+        name={Screens.Shop}
+        component={ShopScreen}
+        options={{
+          tabBarLabel: "Shop",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons name={focused ? "gift-sharp" : "gift-outline"} size={24} color="black" />
+          ),
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "grey",
+        }}
+      />
+      <BottomTabs.Screen
+        name={Screens.Map}
+        component={MapScreen}
+        options={{
+          tabBarLabel: "Map",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons name={focused ? "map-sharp" : "map-outline"} size={24} color="black" />
+          ),
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "grey",
+        }}
+      />
+      <BottomTabs.Screen
+        name={Screens.Settings}
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons name={focused ? "cog-sharp" : "cog-outline"} size={24} color="black" />
+          ),
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "grey",
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };
 
-
 //random function that finds between min and ax
-

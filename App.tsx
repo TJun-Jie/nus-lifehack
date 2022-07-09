@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MainNavigator from "./navigation/MainNavigator";
-import LoginScreen from "./screens/auth/LoginScreen";
 import SignUpScreen from "./screens/auth/SignupScreen";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(true);
 
-  return <View style={{ flex: 1 }}>{isAuth ? <MainNavigator /> : <SignUpScreen />}</View>;
+  return (
+    <Provider store={store}>
+      <View style={{ flex: 1 }}>{isAuth ? <MainNavigator /> : <SignUpScreen />}</View>
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({

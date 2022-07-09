@@ -1,42 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { shopItems, rewardItems } from "../../config/constants";
+import { Reward } from "../../config/interfaces";
 
-export interface UserState {
-  accessToken: string;
-  refreshToken: string;
+export interface ItemSlice {
+  shopItems: Reward[];
+  rewardItems: Reward[];
 }
 
-interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
-const initialState: UserState = {
-  accessToken: "",
-  refreshToken: "",
+const initialState: ItemSlice = {
+  shopItems,
+  rewardItems,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    onLogin: (state: UserState, action: PayloadAction<LoginResponse>) => {
-      return {
-        ...state,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
-        error: "",
-      };
+    onChangeShopItems: (state: ItemSlice, action: PayloadAction<Reward[]>) => {
+      state.shopItems = action.payload;
     },
-    onSignOut: (state: UserState) => {
-      return {
-        ...state,
-        accessToken: "",
-        refreshToken: "",
-      };
+    onChangeRewardItems: (state: ItemSlice, action: PayloadAction<Reward[]>) => {
+      state.rewardItems = action.payload;
     },
   },
 });
 
-export const { onLogin, onSignOut } = userSlice.actions;
+export const { onChangeRewardItems, onChangeShopItems } = userSlice.actions;
 
 export default userSlice.reducer;
