@@ -9,19 +9,15 @@ export type Props = {};
 
 interface States {
   hasPermissions: boolean;
-  camera: Camera | null;
   cameraType: CameraType;
-  capturedImage: any;
   error: string;
 }
 
 const CameraScreen: React.FC<Props> = (props: any) => {
-  const cameraRef = useRef(null);
+  const cameraRef = useRef<Camera | any>(null);
   const [cameraState, setCameraState] = useState<States>({
     hasPermissions: false,
-    camera: null,
     cameraType: CameraType.back,
-    capturedImage: null,
     error: "",
   });
 
@@ -63,16 +59,15 @@ const CameraScreen: React.FC<Props> = (props: any) => {
 
   // Take screenshot when click on scan NOTE
   const onScanHandler = () => {
-    if (cameraState.camera) {
-      cameraState.camera
+    if (cameraRef.current) {
+      cameraRef.current
         .takePictureAsync()
-        .then((img) => {
-          console.log(img);
+        .then((img: any) => {
           props.navigation.navigate(Screens.ScanDetail, {
-            imgSource: cameraState.capturedImage.uri,
+            imgSource: img.uri,
           });
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(err);
         });
     }
@@ -118,7 +113,7 @@ const CameraScreen: React.FC<Props> = (props: any) => {
             style={styles.submitButtonContainer}
             onPress={onScanHandler}
           >
-            <Text style={{ color: "white" }}>Scan</Text>
+            <Text style={styles.submitText}>Scan</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -161,15 +156,13 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     justifyContent: "flex-end",
-    backgroundColor: "black",
-    opacity: 0.5,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
 
   topOverlayContainer: {
     height: "20%",
     width: "100%",
-    backgroundColor: "black",
-    opacity: 0.5,
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -198,15 +191,13 @@ const styles = StyleSheet.create({
   focusMargin: {
     width: "10%",
     height: "100%",
-    backgroundColor: "black",
-    opacity: 0.5,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
 
   bottomOverlayContainer: {
     height: "30%",
     width: "100%",
-    backgroundColor: "black",
-    opacity: 0.5,
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -218,6 +209,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#407056",
     width: "70%",
     height: "20%",
+  },
+
+  submitText: {
+    color: "white",
+    fontSize: 25,
   },
 });
 
