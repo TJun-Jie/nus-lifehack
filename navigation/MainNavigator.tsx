@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { AuthNavigator, BottomTabNavigator } from "./AppNavigator";
+import { BottomTabNavigator } from "./AppNavigator";
 
 export type Props = {};
 

@@ -7,6 +7,8 @@ export enum Screens {
   Shop = "Shop",
   Settings = "Settings",
   Map = "Map",
+  Camera = "Camera",
+  ScanDetail = "ScanDetail",
 }
 
 export enum Colors {
