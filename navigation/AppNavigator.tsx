@@ -29,6 +29,7 @@ export const BottomTabNavigator = () => {
     <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
       <BottomTabs.Screen name={Screens.Home} component={HomeScreen} />
       <BottomTabs.Screen name={Screens.Shop} component={ShopScreen} />
+      <BottomTabs.Screen name={Screens.Map} component={MapScreen} />
       <BottomTabs.Screen name={Screens.Settings} component={SettingsScreen} />
     </BottomTabs.Navigator>
   );

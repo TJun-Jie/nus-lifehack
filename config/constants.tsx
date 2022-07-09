@@ -6,6 +6,7 @@ export enum Screens {
   Home = "Home",
   Shop = "Shop",
   Settings = "Settings",
+  Map = "Map",
 }
 
 export enum Colors {
