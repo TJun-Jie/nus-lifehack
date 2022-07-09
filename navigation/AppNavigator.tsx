@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import HomeScreen from "../screens/app/HomeScreen";
+import CameraScreen from "../screens/app/CameraScreen";
 
 import { constants } from "../constant";
 
@@ -12,7 +13,11 @@ const AuthStack = createStackNavigator();
 
 export const AuthNavigator = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <AuthStack.Screen
         name={constants.screenNames.login}
         component={LoginScreen}
@@ -29,10 +34,23 @@ const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabNavigator = () => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <BottomTabs.Screen
         name={constants.screenNames.home}
         component={HomeScreen}
+      />
+      <BottomTabs.Screen
+        name={constants.screenNames.camera}
+        component={CameraScreen}
+        options={{
+          tabBarStyle: {
+            display: "none",
+          },
+        }}
       />
     </BottomTabs.Navigator>
   );
