@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import MarkerComponent from "./MarkerComponent";
+import RecycleBinMarker from '../../components/Maps/RecycleBinMarker'
+import { firestore} from "../../config/firebase";
+import {collection, doc, setDoc, getDocs, addDoc} from "firebase/firestore";
+import {BinsDoc} from "../../config/interfaces";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyCve7vFBOjV4kK_DwhSHnn2JF-hXAPeszw";
+const GOOGLE_MAPS_APIKEY = "AIzaSyArgxVSiDVmM1YqIzX2OwuVPxiijlVsROc";
+
+
 
 const data = {
     Route: {
@@ -40,24 +45,43 @@ const data = {
 };
 
 const origin = { latitude: 1.3584168333017268, longitude: 103.70746290442666 };
-const destination = {
-    latitude: 1.3500577333970956,
-    longitude: 103.72828007393781,
-};
-const secondDestination = {
-    latitude: 1.3316125813561035,
-    longitude: 103.72105779063803,
-};
+
+interface binState {
+    bins: BinsDoc[];
+}
 
 function MapComponent() {
+    const [bins, setBins] = useState<BinsDoc[]>([])
     const cancelInModalMode = () => setInModalMode(false);
     const [inModalMode, setInModalMode] = useState(false);
     const [selectedMarker, setSelectedMarker] = useState(0);
 
-    const manageModal = (i) => {
+    const manageModal = (i: number) => {
         setSelectedMarker(i);
         setInModalMode(true);
     };
+
+
+    useEffect( () => {
+        const fetchData = async () => {
+            const querySnapshot = await getDocs(collection(firestore, "bins"));
+            querySnapshot.forEach((item) => {
+                // doc.data() is never undefined for query doc snapshots
+                const newBin = item.data() as BinsDoc;
+                setBins([...bins, newBin])
+
+            })
+
+
+        }
+
+
+
+        fetchData().catch(e => console.log(e));
+
+
+
+    }, [bins]);
 
     const [markers, setMarkers] = useState(data.Route.coordinates);
     const renderedMarker = [];
@@ -96,8 +120,10 @@ function MapComponent() {
                 {renderedMarker}
             </MapView>
 
-            <MarkerComponent
-                text={data.Route.coordinates[selectedMarker].danger}
+            <RecycleBinMarker
+                // text={data.Route.coordinates[selectedMarker].danger}
+                locationName="test"
+                activityStatus="active"
                 visible={inModalMode}
                 onCancel={cancelInModalMode}
             />

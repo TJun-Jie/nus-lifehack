@@ -3,5 +3,6 @@ export const constants = {
     login: "Login",
     signup: "Signup",
     home: "Home",
+    maps: "Maps",
   },
 };
