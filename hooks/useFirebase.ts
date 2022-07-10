@@ -1,4 +1,4 @@
-import { firestore } from "../config/firebase";
+import { auth, firestore } from "../config/firebase";
 import { Post, PostDoc, User } from "../config/interfaces";
 import { collection, addDoc, deleteDoc, updateDoc, doc, DocumentData } from "firebase/firestore";
 import { useCollection, useDocumentData } from "react-firebase-hooks/firestore";
@@ -37,6 +37,4 @@ export const useDocumentDetails = (docId: string, collectionName: string) => {
   return { value, loading, error };
 };
 
-export const useUserDetails = (userId: string) => {
-  return useDocumentDetails(userId, USER_COLLECTION_NAME);
-};
+
