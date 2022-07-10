@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, Pressable } from "react-native";
 import { Colors } from "../../config/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
 export type Props = {};
 
@@ -56,7 +58,9 @@ const SettingsScreen: React.FC<Props> = () => {
         </View>
         <View style={styles.row}>
           <Ionicons name="exit-outline" size={20} />
-          <Text style={styles.rowText}>Logout</Text>
+          <Pressable onPress={() => signOut(auth)}>
+            <Text style={styles.rowText}>Logout</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>

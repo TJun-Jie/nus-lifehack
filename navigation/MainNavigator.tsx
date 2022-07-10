@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-
-import { BottomTabNavigator } from "./AppNavigator";
+import { AuthStackNavigator, BottomTabNavigator } from "./AppNavigator";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../config/firebase";
 
 export type Props = {};
 
 const MainNavigator: React.FC<Props> = () => {
+  const [user] = useAuthState(auth);
+  const isAuth = !!user;
+
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      {isAuth ? <BottomTabNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };
