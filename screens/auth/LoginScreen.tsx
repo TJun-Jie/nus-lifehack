@@ -1,10 +1,45 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { Colors } from "../../config/constants";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Pressable,
+} from "react-native";
+import { Colors, Screens } from "../../config/constants";
+import { useSignInWithEmailAndPassword, } from "react-firebase-hooks/auth";
+import { auth } from "../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 
 export type Props = {};
 
 const LoginScreen: React.FC<Props> = () => {
+  const [signIn, user, loading, signInError] = useSignInWithEmailAndPassword(auth);
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const errorMessage = signInError?.message ?? "Something went wrong";
+
+  useEffect(() => {
+    if (signInError)
+      Alert.alert("Sign in error", errorMessage, [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        { text: "Yes", onPress: () => {} },
+      ]);
+  }, [signInError]);
+
+  const signInHandler = async () => {
+    signIn(email, password);
+
+    if (user) navigation.navigate(Screens.Home as any);
+  };
+
   return (
     <View style={styles.centred}>
       <Text style={styles.title}>Welcome Back</Text>
@@ -14,7 +49,9 @@ const LoginScreen: React.FC<Props> = () => {
         placeholder="Email"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        value={email}
       />
       <TextInput
         style={styles.input}
@@ -22,17 +59,21 @@ const LoginScreen: React.FC<Props> = () => {
         placeholder="Password"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        value={password}
+        secureTextEntry
+        onChangeText={setPassword}
       />
 
       <View style={styles.btmContainer}>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={styles.btnText}>Login</Text>
+        <TouchableOpacity style={styles.btn} onPress={signInHandler} disabled={loading}>
+          <Text style={styles.btnText}>{loading ? "Logging In..." : "Login"}</Text>
         </TouchableOpacity>
 
         <View style={styles.btmText}>
           <Text style={styles.text}>Don't have an account?</Text>
-          <Text style={styles.link}>Sign Up</Text>
+          <Pressable onPress={() => navigation.navigate(Screens.Signup as any)}>
+            <Text style={styles.link}>Sign Up</Text>
+          </Pressable>
         </View>
       </View>
     </View>

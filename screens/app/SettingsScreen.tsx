@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from "react-native";
-import { Colors } from "../../config/constants";
+import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
 export type Props = {};
 
@@ -13,10 +14,8 @@ const SettingsScreen: React.FC<Props> = () => {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              // width={30}
-              // height={}
               source={{
-                uri: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2040&q=80",
+                uri: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
               }}
             />
           </View>
@@ -56,7 +55,9 @@ const SettingsScreen: React.FC<Props> = () => {
         </View>
         <View style={styles.row}>
           <Ionicons name="exit-outline" size={20} />
-          <Text style={styles.rowText}>Logout</Text>
+          <Pressable onPress={() => signOut(auth)}>
+            <Text style={styles.rowText}>Logout</Text>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>

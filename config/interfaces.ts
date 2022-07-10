@@ -25,3 +25,18 @@ export interface Bins {
 export interface BinsDoc extends Bins {
   id: string;
 }
+
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+
+  cans: number;
+  plastic: number;
+  metal: number;
+  glass: number;
+
+  points: number;
+  vouchers: string[];
+}

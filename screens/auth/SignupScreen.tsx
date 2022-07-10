@@ -1,10 +1,69 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { Colors } from "../../config/constants";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  Alert,
+} from "react-native";
+import { Colors, Screens } from "../../config/constants";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../config/firebase";
+import { useMutations } from "../../hooks/useFirebase";
 
 export type Props = {};
 
 const SignupScreen: React.FC<Props> = () => {
+  const navigation = useNavigation();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [signUp, user, loading, signUpError] = useCreateUserWithEmailAndPassword(auth);
+  const errorMessage = signUpError?.message ?? "Something went wrong";
+  const { createUser } = useMutations();
+
+  useEffect(() => {
+    if (user) {
+      createUser({
+        id: user?.user.uid,
+        email,
+        firstName: "",
+        lastName: "",
+        cans: 0,
+        plastic: 0,
+        metal: 0,
+        glass: 0,
+        points: 0,
+        vouchers: [],
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (signUpError)
+      Alert.alert("Sign up error", errorMessage, [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        { text: "Yes", onPress: () => {} },
+      ]);
+  }, [signUpError]);
+
+  const signupHandler = async () => {
+    await signUp(email, password);
+    console.log(user);
+    if (user) {
+      navigation.navigate(Screens.Home as any);
+    }
+  };
+
   return (
     <View style={styles.centred}>
       <Text style={styles.title}>Sign up with your email</Text>
@@ -14,7 +73,8 @@ const SignupScreen: React.FC<Props> = () => {
         placeholder="First Name"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        onChangeText={setFirstName}
+        value={firstName}
       />
       <TextInput
         style={styles.input}
@@ -22,7 +82,8 @@ const SignupScreen: React.FC<Props> = () => {
         placeholder="Last Name"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        onChangeText={setLastName}
+        value={lastName}
       />
       <TextInput
         style={styles.input}
@@ -30,7 +91,8 @@ const SignupScreen: React.FC<Props> = () => {
         placeholder="Email"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         style={styles.input}
@@ -38,17 +100,21 @@ const SignupScreen: React.FC<Props> = () => {
         placeholder="Password"
         placeholderTextColor={"#888"}
         autoCapitalize="none"
-        onChangeText={() => {}}
+        onChangeText={setPassword}
+        value={password}
+        secureTextEntry
       />
 
       <View style={styles.btmContainer}>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={styles.btnText}>Login</Text>
+        <TouchableOpacity style={styles.btn} onPress={signupHandler} disabled={loading}>
+          <Text style={styles.btnText}>Sign up</Text>
         </TouchableOpacity>
 
         <View style={styles.btmText}>
           <Text style={styles.text}>Already have an account?</Text>
-          <Text style={styles.link}>Sign Up</Text>
+          <Pressable onPress={() => navigation.navigate(Screens.Login as any)}>
+            <Text style={styles.link}>Log In</Text>
+          </Pressable>
         </View>
       </View>
     </View>

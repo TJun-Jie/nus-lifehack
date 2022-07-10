@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const AuthStack = createStackNavigator();
 
-const AuthStackNavigator = () => {
+export const AuthStackNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name={Screens.Login} component={LoginScreen} />
